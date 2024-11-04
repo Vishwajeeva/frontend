@@ -30,7 +30,7 @@ export default function Register() {
 		setIsLoading(true);
 
 		try {
-			const response = await axios.post("http://127.0.0.1:8000/api/register/", formData);
+			const response = await axios.post("http://vishwa2708.pythonanywhere.com/api/register/", formData);
 			console.log("Success!", response.data);
 			setSuccessMessage("Registration Successful!");
 		} catch (error) {

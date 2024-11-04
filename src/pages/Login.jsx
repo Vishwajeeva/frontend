@@ -29,7 +29,7 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login/", formData);
+      const response = await axios.post("http://vishwa2708.pythonanywhere.com/api/login/", formData);
       console.log("Success!", response.data);
 
       // Save tokens and user details in localStorage

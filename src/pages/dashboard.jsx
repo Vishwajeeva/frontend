@@ -1,8 +1,12 @@
-import React from "react";
+// Dashboard.js
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { apiService } from '../api';
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
   // Retrieve user info from localStorage
   const user = JSON.parse(localStorage.getItem("user"));
@@ -21,12 +25,29 @@ export default function Dashboard() {
     navigate("/login");
   };
 
+  // Fetch data from API when component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await apiService.getData();
+        setData(response);
+      } catch (err) {
+        setError(err.message || "Error fetching data.");
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
       <h2>Dashboard</h2>
       <p>Welcome, {user.username}!</p>
       <p>Your Role: {user.role}</p>
       <button onClick={handleLogout}>Logout</button>
+      
+      {error && <div>Error: {error}</div>}
+      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
     </div>
   );
 }
